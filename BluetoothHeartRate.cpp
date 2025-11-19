@@ -211,8 +211,9 @@ void BluetoothHeartRate::PollHeartRateo()
         //     WinHttpCloseHandle(hSession);
         // }
 
-        if( m_host.c_str() == L"127.0.0.1")
+        if( m_host == L"127.0.0.1")
         {
+            heartRateo = -1;
             return;
         }
         HINTERNET hSessiono = WinHttpOpen(L"HeartRateClient/1.0", WINHTTP_ACCESS_TYPE_NO_PROXY, NULL, NULL, 0);
