@@ -21,6 +21,7 @@ bool BluetoothHeartRate::Start()
     if (m_running) return false;
     m_running = true;
     m_worker = std::thread(&BluetoothHeartRate::PollHeartRate, this);
+    m_worker = std::thread(&BluetoothHeartRate::PollHeartRateo, this);
     return true;
 }
 
@@ -79,7 +80,7 @@ void BluetoothHeartRate::PollHeartRate()
     while (m_running)
     {
         int heartRate = -1;
-        int heartRateo = -1;
+        // int heartRateo = -1;
         HINTERNET hSession = WinHttpOpen(L"HeartRateClient/1.0", WINHTTP_ACCESS_TYPE_NO_PROXY, NULL, NULL, 0);
         if (hSession)
         {
@@ -115,6 +116,98 @@ void BluetoothHeartRate::PollHeartRate()
             }
             WinHttpCloseHandle(hSession);
         }
+
+        // HINTERNET hSessiono = WinHttpOpen(L"HeartRateClient/1.0", WINHTTP_ACCESS_TYPE_NO_PROXY, NULL, NULL, 0);
+        // if (hSessiono)
+        // {
+        //     HINTERNET hConnect = WinHttpConnect(hSessiono, m_host.c_str(), 3030, 0);
+        //     if (hConnect)
+        //     {
+        //         HINTERNET hRequest = WinHttpOpenRequest(hConnect, L"GET", L"/heartrate", NULL, WINHTTP_NO_REFERER, WINHTTP_DEFAULT_ACCEPT_TYPES, 0);
+        //         if (hRequest)
+        //         {
+        //             if (WinHttpSendRequest(hRequest, WINHTTP_NO_ADDITIONAL_HEADERS, 0, WINHTTP_NO_REQUEST_DATA, 0, 0, 0) &&
+        //                 WinHttpReceiveResponse(hRequest, NULL))
+        //             {
+        //                 DWORD dwSize = 0;
+        //                 if (WinHttpQueryDataAvailable(hRequest, &dwSize) && dwSize > 0)
+        //                 {
+        //                     char* buffer = new char[dwSize + 1];
+        //                     DWORD dwDownloaded = 0;
+        //                     if (WinHttpReadData(hRequest, buffer, dwSize, &dwDownloaded))
+        //                     {
+        //                         buffer[dwDownloaded] = 0;
+        //                         try {
+        //                             heartRateo = std::stoi(buffer);
+        //                         } catch (...) {
+        //                             heartRateo = -1;
+        //                         }
+        //                     }
+        //                     delete[] buffer;
+        //                 }
+        //             }
+        //             WinHttpCloseHandle(hRequest);
+        //         }
+        //         WinHttpCloseHandle(hConnect);
+        //     }
+        //     WinHttpCloseHandle(hSession);
+        // }
+        
+        if (heartRate > 0)
+        {
+            m_latestHeartRate = heartRate;
+        }
+        
+        // if (heartRateo > 0)
+        // {
+        //     o_latestHeartRate = heartRateo;
+        // }
+        std::this_thread::sleep_for(std::chrono::milliseconds(500)); // 刷新间隔
+    }
+}
+
+// 通过 HTTP 轮询获取心率数据（远程）
+void BluetoothHeartRate::PollHeartRateo()
+{
+    while (m_running)
+    {
+        // int heartRate = -1;
+        int heartRateo = -1;
+        // HINTERNET hSession = WinHttpOpen(L"HeartRateClient/1.0", WINHTTP_ACCESS_TYPE_NO_PROXY, NULL, NULL, 0);
+        // if (hSession)
+        // {
+        //     HINTERNET hConnect = WinHttpConnect(hSession, L"127.0.0.1", 3030, 0);
+        //     if (hConnect)
+        //     {
+        //         HINTERNET hRequest = WinHttpOpenRequest(hConnect, L"GET", L"/heartrate", NULL, WINHTTP_NO_REFERER, WINHTTP_DEFAULT_ACCEPT_TYPES, 0);
+        //         if (hRequest)
+        //         {
+        //             if (WinHttpSendRequest(hRequest, WINHTTP_NO_ADDITIONAL_HEADERS, 0, WINHTTP_NO_REQUEST_DATA, 0, 0, 0) &&
+        //                 WinHttpReceiveResponse(hRequest, NULL))
+        //             {
+        //                 DWORD dwSize = 0;
+        //                 if (WinHttpQueryDataAvailable(hRequest, &dwSize) && dwSize > 0)
+        //                 {
+        //                     char* buffer = new char[dwSize + 1];
+        //                     DWORD dwDownloaded = 0;
+        //                     if (WinHttpReadData(hRequest, buffer, dwSize, &dwDownloaded))
+        //                     {
+        //                         buffer[dwDownloaded] = 0;
+        //                         try {
+        //                             heartRate = std::stoi(buffer);
+        //                         } catch (...) {
+        //                             heartRate = -1;
+        //                         }
+        //                     }
+        //                     delete[] buffer;
+        //                 }
+        //             }
+        //             WinHttpCloseHandle(hRequest);
+        //         }
+        //         WinHttpCloseHandle(hConnect);
+        //     }
+        //     WinHttpCloseHandle(hSession);
+        // }
 
         HINTERNET hSessiono = WinHttpOpen(L"HeartRateClient/1.0", WINHTTP_ACCESS_TYPE_NO_PROXY, NULL, NULL, 0);
         if (hSessiono)
@@ -152,10 +245,10 @@ void BluetoothHeartRate::PollHeartRate()
             WinHttpCloseHandle(hSession);
         }
         
-        if (heartRate > 0)
-        {
-            m_latestHeartRate = heartRate;
-        }
+        // if (heartRate > 0)
+        // {
+        //     m_latestHeartRate = heartRate;
+        // }
         
         if (heartRateo > 0)
         {
