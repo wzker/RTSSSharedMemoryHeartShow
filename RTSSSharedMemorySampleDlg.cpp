@@ -264,7 +264,7 @@ void CRTSSSharedMemorySampleDlg::OnTimer(UINT nIDEvent)
 			m_strStatus = "The following text is being forwarded to OSD:\n\n" + str;
 			m_richEditCtrl.SetWindowText(m_strStatus);
 		}else{
-			m_richEditCtrl.SetWindowText("No Heart Data")
+			m_richEditCtrl.SetWindowText("No Heart Data");
 		}
 	}
 	
