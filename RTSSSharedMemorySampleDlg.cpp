@@ -242,6 +242,10 @@ void CRTSSSharedMemorySampleDlg::OnTimer(UINT nIDEvent)
 {
 	int hr = g_heartRate.GetLatestHeartRate();
 	int hro = g_heartRate.GetLatestHeartRateo();
+	CString stra;
+	stra.Format("Local: %d, Other: %d", hr, hro);
+	m_richEditCtrl.SetWindowText(stra);
+	
 	if (hr > 0 && hro > 0)
 	{
 		// 使用对齐标签A0，单位bpm右对齐
