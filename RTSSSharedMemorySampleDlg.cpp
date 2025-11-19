@@ -8,7 +8,7 @@
 #include "RTSSSharedMemorySampleDlg.h"
 #include "GroupedString.h"
 #include "BluetoothHeartRate.h"
-BluetoothHeartRate g_heartRate; // È«¾Ö¶ÔÏóÉùÃ÷
+BluetoothHeartRate g_heartRate; // å…¨å±€å¯¹è±¡å£°æ˜
 /////////////////////////////////////////////////////////////////////////////
 #include <shlwapi.h>
 #include <float.h>
@@ -180,7 +180,8 @@ for (DWORD dwCpu=0; dwCpu<MAX_CPU; dwCpu++)
 
 	Refresh();
 	
-	g_heartRate.Start(); // Æô¶¯ĞÄÂÊ¼à²â
+	g_heartRate.Initialize();
+	g_heartRate.Start(); // å¯åŠ¨å¿ƒç‡ç›‘æµ‹
 
 	return TRUE;  // return TRUE  unless you set the focus to a control
 }
@@ -242,13 +243,25 @@ void CRTSSSharedMemorySampleDlg::OnTimer(UINT nIDEvent)
 	int hr = g_heartRate.GetLatestHeartRate();
 	if (hr > 0)
 	{
-		// Ê¹ÓÃ¶ÔÆë±êÇ©A0£¬µ¥Î»bpmÓÒ¶ÔÆë
+		// ä½¿ç”¨å¯¹é½æ ‡ç­¾A0ï¼Œå•ä½bpmå³å¯¹é½
 		CString str;
-		str.Format("<C=FFC0CB>Heart<A0>%d <A><A1><S1>bpm<S><A>", hr);
+		str.Format("<C=FFC0CB>My Heart<A0> %d <A><A1><S1>bpm<S><A>", hr);
 		UpdateOSD(str);
 		m_strStatus = "The following text is being forwarded to OSD:\n\n" + str;
 		m_richEditCtrl.SetWindowText(m_strStatus);
 	}
+	
+	int hro = g_heartRate.GetLatestHeartRateo();
+	if (hr > 0)
+	{
+		// ä½¿ç”¨å¯¹é½æ ‡ç­¾A0ï¼Œå•ä½bpmå³å¯¹é½
+		CString str;
+		str.Format("<C=FFC0CB>FuFu Heart<A0> %d <A><A1><S1>bpm<S><A>", hro);
+		UpdateOSD(str);
+		m_strStatus = "The following text is being forwarded to OSD:\n\n" + str;
+		m_richEditCtrl.SetWindowText(m_strStatus);
+	}
+	
 	CDialog::OnTimer(nIDEvent);
 }
 /////////////////////////////////////////////////////////////////////////////
