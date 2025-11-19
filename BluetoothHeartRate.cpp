@@ -31,6 +31,10 @@ int BluetoothHeartRate::GetLatestHeartRate() const
 {
     return m_latestHeartRate.load();
 }
+int BluetoothHeartRate::GetLatestHeartRateo() const
+{
+    return o_latestHeartRate.load();
+}
 
 // 初始化函数，或放在构造函数中
 bool BluetoothHeartRate::Initialize()
