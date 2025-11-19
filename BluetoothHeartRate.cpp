@@ -13,7 +13,7 @@
 
 #pragma comment(lib, "winhttp.lib")
 
-BluetoothHeartRate::BluetoothHeartRate() : m_latestHeartRate(-1), m_running(false) {}
+BluetoothHeartRate::BluetoothHeartRate() : m_latestHeartRate(-1), o_latestHeartRate(-1), m_running(false) {}
 BluetoothHeartRate::~BluetoothHeartRate() { Stop(); }
 
 bool BluetoothHeartRate::Start()
@@ -43,8 +43,8 @@ int BluetoothHeartRate::GetLatestHeartRateo() const
 // 初始化函数，或放在构造函数中
 bool BluetoothHeartRate::Initialize()
 {
-    m_running = true;
-    m_latestHeartRate = -1;
+    // m_running = true;
+    // m_latestHeartRate = -1;
 
     // 默认值，如果读取失败就使用 127.0.0.1
     m_host = L"127.0.0.1";
@@ -68,11 +68,6 @@ bool BluetoothHeartRate::Initialize()
             }
         }
         file.close();
-    }
-    else
-    {
-        // 文件不存在，使用默认值 127.0.0.1
-        // 可以输出日志提示，例如 OutputDebugString
     }
 
     return true;
