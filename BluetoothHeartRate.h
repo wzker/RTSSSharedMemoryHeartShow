@@ -10,7 +10,9 @@ public:
     ~BluetoothHeartRate();
     bool Start();
     void Stop();
+    bool Initialize();
     int GetLatestHeartRate() const;
+    int GetLatestHeartRateo() const;
 
 private:
     void PollHeartRate();
