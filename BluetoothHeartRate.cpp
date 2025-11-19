@@ -21,7 +21,7 @@ bool BluetoothHeartRate::Start()
     if (m_running) return false;
     m_running = true;
     m_worker = std::thread(&BluetoothHeartRate::PollHeartRate, this);
-    m_worker = std::thread(&BluetoothHeartRate::PollHeartRateo, this);
+    o_worker = std::thread(&BluetoothHeartRate::PollHeartRateo, this);
     return true;
 }
 
@@ -30,6 +30,8 @@ void BluetoothHeartRate::Stop()
     m_running = false;
     if (m_worker.joinable())
         m_worker.join();
+    if (o_worker.joinable())
+        o_worker.join();
 }
 
 int BluetoothHeartRate::GetLatestHeartRate() const
@@ -153,10 +155,10 @@ void BluetoothHeartRate::PollHeartRate()
         //     WinHttpCloseHandle(hSession);
         // }
         
-        if (heartRate > 0)
-        {
+        // if (heartRate > 0)
+        // {
             m_latestHeartRate = heartRate;
-        }
+        // }
         
         // if (heartRateo > 0)
         // {
@@ -250,10 +252,10 @@ void BluetoothHeartRate::PollHeartRateo()
         //     m_latestHeartRate = heartRate;
         // }
         
-        if (heartRateo > 0)
-        {
+        // if (heartRateo > 0)
+        // {
             o_latestHeartRate = heartRateo;
-        }
+        // }
         std::this_thread::sleep_for(std::chrono::milliseconds(500)); // 刷新间隔
     }
 }

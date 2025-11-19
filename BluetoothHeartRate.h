@@ -20,5 +20,6 @@ private:
     std::atomic<int> m_latestHeartRate;
     std::atomic<int> o_latestHeartRate;
     std::thread m_worker;
+    std::thread o_worker;
     bool m_running;
 };
