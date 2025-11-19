@@ -14,7 +14,9 @@ public:
 
 private:
     void PollHeartRate();
+    std::wstring m_host;       // 保存从 host.txt 读取的主机名，如 L"127.0.0.1"
     std::atomic<int> m_latestHeartRate;
+    std::atomic<int> o_latestHeartRate;
     std::thread m_worker;
     bool m_running;
 };
