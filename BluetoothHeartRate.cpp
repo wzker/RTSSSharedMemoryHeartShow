@@ -6,6 +6,10 @@
 #include <atomic>
 #include <iostream>
 #include <cstring>
+#include <fstream>
+#include <string>
+#include <codecvt>
+#include <locale>
 
 #pragma comment(lib, "winhttp.lib")
 
