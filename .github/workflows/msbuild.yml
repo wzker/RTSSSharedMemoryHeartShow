@@ -57,4 +57,4 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
           name: Release-Binaries-Win32  # Artifact 名称，可自定义
-          path: target\Release\*.exe          # 根据你的实际输出路径调整
+          path: .\Release\*.exe          # 根据你的实际输出路径调整
