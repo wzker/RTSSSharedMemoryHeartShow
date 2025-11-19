@@ -152,7 +152,7 @@ void BluetoothHeartRate::PollHeartRate()
         //         }
         //         WinHttpCloseHandle(hConnect);
         //     }
-        //     WinHttpCloseHandle(hSession);
+        //     WinHttpCloseHandle(hSessiono);
         // }
         
         // if (heartRate > 0)
@@ -244,7 +244,7 @@ void BluetoothHeartRate::PollHeartRateo()
                 }
                 WinHttpCloseHandle(hConnect);
             }
-            WinHttpCloseHandle(hSession);
+            WinHttpCloseHandle(hSessiono);
         }
         
         // if (heartRate > 0)
