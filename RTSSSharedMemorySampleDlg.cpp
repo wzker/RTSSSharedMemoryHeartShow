@@ -241,26 +241,37 @@ HCURSOR CRTSSSharedMemorySampleDlg::OnQueryDragIcon()
 void CRTSSSharedMemorySampleDlg::OnTimer(UINT nIDEvent) 
 {
 	int hr = g_heartRate.GetLatestHeartRate();
-	if (hr > 0)
+	int hro = g_heartRate.GetLatestHeartRateo();
+	if (hr > 0 && hro > 0)
 	{
 		// 使用对齐标签A0，单位bpm右对齐
 		CString str;
-		str.Format("<C=FFC0CB>My Heart<A0> %d <A><A1><S1>bpm<S><A>", hr);
+		str.Format("<C=FFC0CB>My Heart<A0> %d <A><A1><S1>bpm<S><A>\n<C=FFC0CB>FuFu Heart<A0> %d <A><A1><S1>bpm<S><A>", hr, hro);
 		UpdateOSD(str);
 		m_strStatus = "The following text is being forwarded to OSD:\n\n" + str;
 		m_richEditCtrl.SetWindowText(m_strStatus);
+	}else{
+		if(hr >0)
+		{
+			// 使用对齐标签A0，单位bpm右对齐
+		    CString str;
+			str.Format("<C=FFC0CB>My Heart<A0> %d <A><A1><S1>bpm<S><A>\n<C=FFC0CB>FuFu Heart<A0> %d <A><A1><S1>bpm<S><A>", hr, hro);
+			UpdateOSD(str);
+			m_strStatus = "The following text is being forwarded to OSD:\n\n" + str;
+			m_richEditCtrl.SetWindowText(m_strStatus);
+		}
 	}
 	
-	int hro = g_heartRate.GetLatestHeartRateo();
-	if (hr > 0)
-	{
-		// 使用对齐标签A0，单位bpm右对齐
-		CString str;
-		str.Format("<C=FFC0CB>FuFu Heart<A0> %d <A><A1><S1>bpm<S><A>", hro);
-		UpdateOSD(str);
-		m_strStatus = "The following text is being forwarded to OSD:\n\n" + str;
-		m_richEditCtrl.SetWindowText(m_strStatus);
-	}
+	// int hro = g_heartRate.GetLatestHeartRateo();
+	// if (hro > 0)
+	// {
+	// 	// 使用对齐标签A0，单位bpm右对齐
+	// 	CString str;
+	// 	str.Format("<C=FFC0CB>FuFu Heart<A0> %d <A><A1><S1>bpm<S><A>", hro);
+	// 	UpdateOSD(str);
+	// 	m_strStatus = "The following text is being forwarded to OSD:\n\n" + str;
+	// 	m_richEditCtrl.SetWindowText(m_strStatus);
+	// }
 	
 	CDialog::OnTimer(nIDEvent);
 }
