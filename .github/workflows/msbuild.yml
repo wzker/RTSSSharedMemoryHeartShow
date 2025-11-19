@@ -58,4 +58,4 @@ jobs:
       with:
           name: Release-Binaries-Win32  # Artifact 名称，可自定义
           path: |
-            D:\a\RTSSSharedMemoryHeartShow\RTSSSharedMemoryHeartShow\Release\*.exe          # 根据你的实际输出路径调整
+            bin\Release\*.exe          # 根据你的实际输出路径调整
